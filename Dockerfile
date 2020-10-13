@@ -3,7 +3,8 @@ FROM ruby:2.7.1
 # リポジトリを更新し依存モジュールをインストール
 RUN apt-get update -qq && \
         apt-get install -y build-essential \
-        nodejs
+        nodejs \
+        procps
 
 # yarnパッケージ管理ツールインストール
 RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
@@ -27,7 +28,9 @@ ADD Gemfile.lock /mussertion/Gemfile.lock
 RUN bundle install
 
 # ホストのアプリケーションディレクトリ内をすべてコンテナにコピー
-COPY . /mussertion
+#COPY . /mussertion
 
 # puma.sockを配置するディレクトリを作成
-RUN mkdir -p tmp/sockets
+RUN mkdir -p /mussertion/tmp/sockets
+
+CMD ["rails", "s"]
