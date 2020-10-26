@@ -1,14 +1,14 @@
 version: '3'
 
-services: 
+services:
     rails:
         container_name: rails
-        build: 
+        build:
             context: .
             dockerfile: ./Dockerfile
-        volumes: 
+        volumes:
             - .:/mussertion
-            - ./entrypoint.sh /usr/bin/
+            # - ./entrypoint.sh /usr/bin/
         ports:
             - 3000:3000
         stdin_open: true
@@ -16,30 +16,30 @@ services:
         # pumaを実行するコマンド
         #command: bundle exec puma -C config/puma.rb
 
-    nginx: 
+    nginx:
         container_name: nginx
-        build: 
+        build:
             context: .
             dockerfile: ./docker/dev/app/nginx/Dockerfile
-        volumes: 
+        volumes:
             - .:/mussertion
-        ports: 
+        ports:
             - 80:80
 
-    mysql: 
+    mysql:
         image: mysql:8.0
         container_name: mysql
-        environment: 
+        environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: mussertion
             MYSQL_USER: root
             MYSQL_PASSWORD: root
             TZ: 'Asia/Tokyo'
-        volumes: 
+        volumes:
             - rails-db:/var/lib/mysql/
             - ./docker/dev/app/mysql/my.cof:/etc/mysql/my.cnf
-        ports: 
+        ports:
             - 3306:3306
 
-volumes: 
-    rails-db: 
+volumes:
+    rails-db:
