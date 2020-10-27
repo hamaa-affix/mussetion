@@ -14,6 +14,10 @@ class BoardsController < ApplicationController
     redirect_to("/boards")
   end
 
+  def show
+    @board = Board.find(params[:id])
+  end
+
   private
   #このprivateメソッドをよび、name,title,bodyのkeyのみ保存する。
   def board_params
