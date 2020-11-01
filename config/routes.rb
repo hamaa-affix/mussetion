@@ -15,5 +15,5 @@ Rails.application.routes.draw do
   # delete 'boards/:id', to: 'boards#destroy'
 
   #onlyを付与することで作成したコントローラーメソッドのみrestしてくれる
-  resources :boards, only: [:index, :new, :create, :show, :edit, :update]
+  resources :boards
 end

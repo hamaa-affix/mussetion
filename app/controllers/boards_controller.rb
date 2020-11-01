@@ -10,8 +10,9 @@ class BoardsController < ApplicationController
   end
 
   def create
+    #laravelでいうstore method
     Board.create(board_params)
-    redirect_to("/boards")
+    redirect_to board
   end
 
   def show
@@ -30,10 +31,19 @@ class BoardsController < ApplicationController
     redirect_to board
   end
 
+  def destroy
+    board = Board.find(params[:id])
+    board.delete
+ 
+    redirect_to boards_path
+  end
+
   private
   #このprivateメソッドをよび、name,title,bodyのkeyのみ保存する。
   def board_params
     params.require(:board).permit(:name, :title, :body)
   end
+
+
 
 end
