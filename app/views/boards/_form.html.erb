@@ -1,11 +1,4 @@
-<div class="d-flex align-items-center">
-  <h1>掲示板編集</h1>
-  <div class="ml-auto boards__linkBox">
-    <a href="" class="btn btn-outline-dark">掲示板一覧</a>
-  </div>
-</div>
-<%= render  partial: 'form', locals: {board: @board} %>
-<%= form_for @board, :url => { :action => :update } do |f| %>
+<%= form_for board, :url => { :action => :create } do |f| %>
   <div class="form-group">
     <%= f.label :name, '名前' %>
     <%= f.text_field :name, class: 'form-control' %>
