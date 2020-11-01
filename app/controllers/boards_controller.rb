@@ -4,7 +4,9 @@ class BoardsController < ApplicationController
   before_action :set_target_board, only: %i[show edit update, destroy]
 
   def index
-    @boards = Board.all
+    #kaminariをインストールしたことでpagesメソッドが使用可能とり引数に指定したページに表示する
+    #defaultでは25件の検索
+    @boards = Board.page(params[:page])
   end
 
   def new
