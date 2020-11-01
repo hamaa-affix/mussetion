@@ -1,4 +1,8 @@
 class BoardsController < ApplicationController
+  # before_actionメソッド使用することで各アクションが実行される前に自動的にシンボルふが呼び出される
+  # phpでいるconstructerの役割か
+  before_action :set_target_board, only: %i[show edit update, destroy]
+
   def index
     @boards = Board.all
   end
@@ -12,29 +16,24 @@ class BoardsController < ApplicationController
   def create
     #laravelでいうstore method
     Board.create(board_params)
-    redirect_to board
+    redirect_to boards_path
   end
 
   def show
-    @board = Board.find(params[:id])
   end
 
   def edit
-    @board = Board.find(params[:id])
-
   end
 
   def update
-    board = Board.find(params[:id])
-    board.update(board_params)
+    @board.update(board_params)
     #redirect_toの引数変数を渡すことでboards/:idのURLを生成してくれる。
-    redirect_to board
+    redirect_to @board
   end
 
   def destroy
-    board = Board.find(params[:id])
-    board.delete
- 
+    @board.delete
+
     redirect_to boards_path
   end
 
@@ -42,6 +41,11 @@ class BoardsController < ApplicationController
   #このprivateメソッドをよび、name,title,bodyのkeyのみ保存する。
   def board_params
     params.require(:board).permit(:name, :title, :body)
+  end
+
+  def set_target_board
+    # 他のメソッドから参照できるようにインスタンス変数で定義する
+    @board = Board.find(params[:id])
   end
 
 
