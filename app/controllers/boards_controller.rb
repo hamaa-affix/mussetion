@@ -17,8 +17,10 @@ class BoardsController < ApplicationController
 
   def create
     #laravelでいうstore method
-    Board.create(board_params)
-    redirect_to boards_path
+    borad = Board.create(board_params)
+    #flashに任意のkyeに値を設定することで次に値を参照されるまで、セッションにデータが保存される(フラッシュ変数)
+    flash[:notice] = "「#{borad.title}」のメッセージを作成しました"
+    redirect_to borad
   end
 
   def show
@@ -35,8 +37,7 @@ class BoardsController < ApplicationController
 
   def destroy
     @board.delete
-
-    redirect_to boards_path
+    redirect_to boards_path, flash: { notice: "「#{@board.title}」の掲示板が削除されました"}
   end
 
   private
