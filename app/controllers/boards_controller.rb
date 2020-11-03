@@ -12,18 +12,35 @@ class BoardsController < ApplicationController
   def new
     #modelインスタンスを作成
     #controller内で作成したインスタンス変数はviewで参照できる。
-    @board = Board.new
+    @board = Board.new(flash[:board])
   end
 
   def create
-    #laravelでいうstore method
-    borad = Board.create(board_params)
-    #flashに任意のkyeに値を設定することで次に値を参照されるまで、セッションにデータが保存される(フラッシュ変数)
-    flash[:notice] = "「#{borad.title}」のメッセージを作成しました"
-    redirect_to borad
+    #new -> モデルインスタンスを引数のパラメータで初期化する。この時点ではは保存していない
+    #phpだと$model = new Model;
+    board = Board.new(board_params)
+    #newしてsaveしていく
+    if board.save
+      #flashMessage
+      flash[:notice] = "「#{borad.title}」のメッセージを作成しました"
+      redirect_to borad
+    else
+      #saveに失敗したらredirectしてboardオブジェクトとエラーメッセージを返している
+      redirect_to new_board_path, flash: {
+        board: board,
+        error_messages: board.errors.full_messages
+      }
+    end
+
   end
 
   def show
+    #boardに紐すたcommentオブジェクトを生成
+    @commnet = @board.comments.new
+
+    #laravelだったら
+    #$board = Board::find(1);
+    #$board->comments()->get();
   end
 
   def edit
