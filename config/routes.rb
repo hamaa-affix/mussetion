@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'comments/create'
+  get 'comments/destroy'
   root 'static_pages#home'
   #get 'controller#methods'
   get 'static_pages/home'
@@ -16,4 +18,5 @@ Rails.application.routes.draw do
 
   #onlyを付与することで作成したコントローラーメソッドのみrestしてくれる
   resources :boards
+  resources :comments, only: %i[create destroy]
 end
