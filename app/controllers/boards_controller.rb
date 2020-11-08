@@ -16,8 +16,6 @@ class BoardsController < ApplicationController
   end
 
   def create
-    #new -> モデルインスタンスを引数のパラメータで初期化する。この時点ではは保存していない
-    #phpだと$model = new Model;
     board = Board.new(board_params)
     #newしてsaveしていく
     if board.save
@@ -31,16 +29,12 @@ class BoardsController < ApplicationController
         error_messages: board.errors.full_messages
       }
     end
-
   end
 
   def show
     #boardに紐すたcommentオブジェクトを生成
-    @commnet = @board.comments.new
-
-    #laravelだったら
-    #$board = Board::find(1);
-    #$board->comments()->get();
+    @comment = Comment.new(board_id: @board.id)
+    # ここで渡している変数は@board,@comment
   end
 
   def edit
