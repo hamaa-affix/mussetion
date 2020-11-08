@@ -1,0 +1,9 @@
+<tr>
+  <td><%= board.id %></td>
+  <td><%= board.title %></td>
+  <td><%= board.name %></td>
+  <td><%= board.created_at.to_s(:datetime) %></td>
+  <td><%= board.updated_at.to_s(:detetime_jp)%></td>
+  <td><%= link_to  "詳細", board, class: 'btn btn-primary' %></td>
+  <td><%= link_to '削除', board, class: 'btn btn-error', method: :delete %></td>
+</tr>
