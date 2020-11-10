@@ -41,13 +41,25 @@ class BoardsController < ApplicationController
   end
 
   def update
+    if @board.update(board_params)
+      redirect_to @board
+    else
+      redirect_to :back, flash: {
+        board: @board,
+        error_messages: @board.errors.full_messages
+      }
+    end
+  end
+
+
+
     @board.update(board_params)
     #redirect_toの引数変数を渡すことでboards/:idのURLを生成してくれる。
     redirect_to @board
   end
 
   def destroy
-    @board.delete
+    @board.destroy
     redirect_to boards_path, flash: { notice: "「#{@board.title}」の掲示板が削除されました"}
   end
 
