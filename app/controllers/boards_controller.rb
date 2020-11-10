@@ -20,8 +20,8 @@ class BoardsController < ApplicationController
     #newしてsaveしていく
     if board.save
       #flashMessage
-      flash[:notice] = "「#{borad.title}」のメッセージを作成しました"
-      redirect_to borad
+      flash[:notice] = "「#{board.title}」のメッセージを作成しました"
+      redirect_to board
     else
       #saveに失敗したらredirectしてboardオブジェクトとエラーメッセージを返している
       redirect_to new_board_path, flash: {
@@ -51,13 +51,6 @@ class BoardsController < ApplicationController
     end
   end
 
-
-
-    @board.update(board_params)
-    #redirect_toの引数変数を渡すことでboards/:idのURLを生成してくれる。
-    redirect_to @board
-  end
-
   def destroy
     @board.destroy
     redirect_to boards_path, flash: { notice: "「#{@board.title}」の掲示板が削除されました"}
@@ -66,14 +59,11 @@ class BoardsController < ApplicationController
   private
   #このprivateメソッドをよび、name,title,bodyのkeyのみ保存する。
   def board_params
-    params.require(:board).permit(:name, :title, :body)
+    params.require(:board).permit(:name, :title, :body, tag_ids: [])
   end
 
   def set_target_board
     # 他のメソッドから参照できるようにインスタンス変数で定義する
     @board = Board.find(params[:id])
   end
-
-
-
 end
