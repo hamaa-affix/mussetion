@@ -6,7 +6,9 @@ class BoardsController < ApplicationController
   def index
     #kaminariをインストールしたことでpagesメソッドが使用可能とり引数に指定したページに表示する
     #defaultでは25件の検索
-    @boards = Board.page(params[:page])
+    @boards = params[:tag_id].present? ? Tag.find(params[:tag_id]).boards : Board.all
+    @boards = @boards.page(params[:page])
+
   end
 
   def new
