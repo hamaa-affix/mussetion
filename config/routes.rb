@@ -1,22 +1,11 @@
 Rails.application.routes.draw do
-  get 'comments/create'
-  get 'comments/destroy'
-  root 'static_pages#home'
-  #get 'controller#methods'
-  get 'static_pages/home'
-  get '/help_path', to: 'static_pages#help', as:'helf'
-  get '/about_path', to: 'static_pages#about', as:'about'
-  get '/contact_path', to: 'static_pages#contact', as:'contact'
-  #anthor demo
-  # get '/boards', to:'boards#index'
-  # get '/boards/new', to: 'boards#new'
-  # post 'boards', to: 'boards#create'
-  # get 'boards/:id', to: 'boards#show', as: 'boards_show'
-  # get 'boards/:id/edit', to: 'boards#edit'
-  # put  'boards/:id', to: 'boards#update'
-  # delete 'boards/:id', to: 'boards#destroy'
+  get 'mypage', to: 'users#me'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
 
-  #onlyを付与することで作成したコントローラーメソッドのみrestしてくれる
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'home#index'
+  resources :users, only: %i[new create]
   resources :boards
   resources :comments, only: %i[create destroy]
 end
