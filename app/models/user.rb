@@ -16,14 +16,15 @@ class User < ApplicationRecord
   #user modelに認証の機能を持たせる
   has_secure_password
   validates :name,
-      pressnce: true,
-      uniquness: true,
-      length: {maximum: 16},
-      format: {
-        with: /\A[a-z0-9]+\z/,
-        message: 'は小文字英数字で入力してください'
-      }
+    presence: true,
+    uniqueness: true,
+    length: { maximum: 16 },
+    format: {
+      with: /\A[a-z0-9]+\z/,
+      message: 'は小文字英数字で入力してください'
+    }
   validates :password,
-      length: {minimum: 8}
+    length: { minimum: 8 }
+
 
 end
